@@ -1,0 +1,21 @@
+{
+  "name": "exs-academy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+   "dev" : " node index.js"
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Otgonbayar-space/academy-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Otgonbayar-space/academy-node/issues"
+  },
+  "homepage": "https://github.com/Otgonbayar-space/academy-node#readme"
+}
