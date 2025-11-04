@@ -9,6 +9,9 @@ const rl = readline.createInterface({
 // readUsers(): users.txt-ээс унших
 function readUsers() {
   // 👉 Хэрэглэгчийн мэдээллийг унших код
+  
+
+    
 }
 
 // writeUsers(): users.txt-д бичих
