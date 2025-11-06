@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-   "dev" : " node index.js"
-    
+    "dev": " node index.js"
   },
   "repository": {
     "type": "git",
@@ -17,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Otgonbayar-space/academy-node/issues"
   },
-  "homepage": "https://github.com/Otgonbayar-space/academy-node#readme"
+  "homepage": "https://github.com/Otgonbayar-space/academy-node#readme",
+  "dependencies": {
+    "inquirer": "^12.10.0"
+  }
 }
