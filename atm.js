@@ -18,7 +18,10 @@ function readUsers() {
   if (!data.trim()) return [];
 
   return data.split("\n").map((line) => {
-    const [username, pin, balance] = line.split(",");
+    const parts = line.split(",");
+    const username = parts[0] || "";
+    const pin = parts[1] || "";
+    const balance = parts[2] || "0";
     return {
       username: username.trim(),
       pin: pin.trim(),
