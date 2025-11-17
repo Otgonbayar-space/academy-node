@@ -17,6 +17,7 @@
     "url": "https://github.com/Otgonbayar-space/academy-node/issues"
   },
   "dependencies": {
+    "express": "^5.1.0",
     "inquirer": "^12.10.0"
   },
   "homepage": "https://github.com/Otgonbayar-space/academy-node#readme"

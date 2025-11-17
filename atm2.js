@@ -1,96 +1,12 @@
-// import fs from "node:fs/promises";
-// import readline from "readline/promises";
-
-// const rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-// });
-
-// function display() {
-//   console.log(`
-// ==== ATM SYSTEM ====
-// 1. Нэвтрэх
-// 2. Бүртгүүлэх`);
-
-//   rl.question("Сонголтоо оруулна уу: ", (startChoice) => {
-//     if (startChoice === "1") {
-//       login();
-//     } else if (startChoice === "2") {
-//       register();
-//     } else {
-//       console.log("⚠️ Буруу сонголт!");
-//       display();
-//     }
-//   });
-// }
-
-// display();
-
-// function readUsers() {
-//   if (!fs.existsSync("users.json")) return [];
-
-//   // 👉 Хэрэглэгчийн мэдээллийг унших код
-//   const data = fs.readFileSync("users.json", "utf-8");
-//   if (!data.trim()) return [];
-
-//   return data.split("\n").map((line) => {
-//     const [username, pin, balance] = line.split(",");
-//     return {
-//       username: username.trim(),
-//       pin: pin.trim(),
-//       balance: parseInt(balance.trim()),
-//     };
-//   });
-// }
-
-// function writeUsers(users) {
-//   // 👉 Хэрэглэгчийн мэдээллийг хадгалах код
-
-//   const line = users.map((u) => `${u.username}, ${u.pin}, ${u.balance} `);
-
-//   fs.writeFileSync("users.json", line.join("\n"));
-// }
-
-// function logTransaction(username, type, amount) {
-//   // 👉 Гүйлгээний лог бичих код
-//   const log = `${new Date().toLocaleString()} | ${username} | ${type} | ${amount}\n`;
-//   fs.appendFileSync("transactions.json", log);
-// }
-
-// function register() {
-//   const users = readUsers();
-
-//   const usernames =
-//     ("Username:",
-//     (username) => {
-//       console.log(username, "asdasd");
-//       // for (const element of users) {
-//       //   if (element.username === username) {
-//       //     console.log("Burtgeltei username baina");
-//       //     return register();
-//       //   }
-//       // }
-//     });
-// }
-
 import fs from "node:fs/promises";
-import inquirer from "inquirer";
 
 async function display() {
   console.log(`
 ==== ATM SYSTEM ====
 1. Нэвтрэх
 2. Бүртгүүлэх`);
-
-  const { login, register } = await inquirer.prompt([
-    {
-      type: "select",
-      name: "action",
-      choice: "Нэвтрэх",
-      message: "songoltoo hiine uu",
-    },
-  ]);
 }
+rl.question("Songoltoo hiine uu");
 
 display();
 
