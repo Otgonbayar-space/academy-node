@@ -12,3 +12,12 @@ async function readUsers() {
     };
   });
 }
+
+async function writeUsers(users) {
+  try {
+    const jsonString = JSON.stringify(users);
+    await fs.writeFile("data/users.json", jsonString);
+  } catch (error) {
+    console.error("error writing file", error);
+  }
+}
