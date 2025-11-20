@@ -1,76 +1,50 @@
 import express from "express";
+import userRoutes from "./routes/userRoutes.js";
+import bankRoutes from "./routes/bankRoutes.js";
 
 const app = express();
-const port = 3000;
+const port = 8080;
 
 app.use(express.json());
 
-app.get("/shine-medee-list", (req, res) => {
-  const query = req.query;
+app.use("/users", userRoutes);
+app.use("/bank", bankRoutes);
 
-  const news = [{ title: "1" }, { title: "2" }];
+app.listen(port, ()=>{
+  console.log(`Server in the ${port}`)
+})
 
-  if (query.searchValue) {
-    const foundNews = news.filter((value) => {
-      return value.title == query.searchValue;
+
+const apiURL = "http://localhost:8080";
+
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const username = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const errorBox = document.getElementById("errorMsg");
+
+  try {
+    const res = await fetch(`${apiURL}/users/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
     });
 
-    res.json(foundNews);
+    const data = await res.json();
+
+    if (!res.ok) {
+      errorBox.innerText = data.message;
+      return;
+    }
+
+  
+    sessionStorage.setItem("username", username);
+
+    
+    window.location.href = "dashboard.html";
+
+  } catch (error) {
+    errorBox.innerText = "Server is not responding...";
   }
-
-  res.json(news);
 });
-
-app.get("/shine-medee/:id", (req, res) => {
-  const params = req.params;
-
-  const news = [
-    { title: "Hi", id: "1" },
-    { title: "Bye", id: "2" },
-  ];
-
-  const foundNews = news.find((value) => {
-    return value.id == params.id;
-  });
-
-  if (foundNews) {
-    return res.json(foundNews);
-  }
-  res.send("Medee oldsongui");
-});
-
-app.post("/medee-nemeh", (req, res) => {
-  const body = req.body;
-
-  res.send("Medee nemeh");
-});
-
-app.post("/medee-zasah/:id", (req, res) => {
-  const params = req.params;
-
-  const news = [
-    { title: "Hi", id: "1" },
-    { title: "Bye", id: "2" },
-  ];
-
-  const foundNews = news.find((value) => {
-    return value.id == params.id;
-  });
-
-  if (foundNews) {
-    return res.json(foundNews);
-  }
-  res.send("Medee oldsongui");
-});
-
-// app.post("/", (req, res) => {
-//   res.send("Hello World!!!!!");
-// });
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-
-//get => r
-
-//post => action
