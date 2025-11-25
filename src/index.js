@@ -12,13 +12,13 @@ app.use(cookieParser());
 
 app.use("/", (req, res, next) => {
   const userId = req.cookies.user;
-
-  if (userId && req.path === "/index.html") {
+  console.log(userId);
+  if (userId && req.path === "/login.html") {
     return res.redirect("/bank.html");
   }
 
   if (!userId && req.path === "/bank.html") {
-    return res.redirect("/index.html");
+    return res.redirect("/login.html");
   }
 
   if (userId) {
@@ -33,7 +33,7 @@ app.use("/", (req, res, next) => {
   next();
 });
 
-app.use(express.static("frontend"));
+app.use(express.static("frontEnd"));
 
 app.use("/user", userRouters);
 app.use("/bank", bankRouters);
