@@ -1,4 +1,5 @@
 import fs from "fs";
+import { BankService } from "../services/bankService";
 
 const userFile = "./data/users.json";
 
@@ -26,17 +27,29 @@ export const register = (req, res) => {
   res.json({ message: "Амжилттай бүртгэгдлээ" });
 };
 
-export const login = (req, res) => {
-  const { username, password } = req.body;
-  console.log("working");
-  // let users = readUsers();
+res.cookie("user", found.email, {
+  httpOnly: true,
+  secure: false,
+  sameSite: "None",
+  maxAge: 24 * 60 * 60 * 1000,
+});
 
-  // const user = users.find(u.username === username && u.password === password);
+export const login = async (req, res) => {
+  try {
+    const { username, password } = req.body;
 
-  // if (!user)
-  //   return res
-  //     .status(400)
-  //     .json({ message: "Username эсвэл password буруу байна!" });
+    const users = await BankService.getUsers();
+    console.log("users read from this shit:", users);
+    const foundUser = users.find(
+      (user) => user.firstName == username && user.password == password
+    );
 
-  res.json({ message: "Амжилттай нэвтэрлээ", username });
+    if (foundUser) {
+      res.json({ message: "amjilttai", userId: foundUser.id });
+    } else {
+      res.status(401).json({ error: "Username or password is wrong" });
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 };

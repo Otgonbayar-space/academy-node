@@ -2,11 +2,40 @@ import express from "express";
 import userRoutes from "../src/routers/userRoutes.js";
 import bankRoutes from "../src/routers/bankRoutes.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+
 const app = express();
 const port = 8080;
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors());
+
+app.use("/", (req, res, next) => {
+  const userId = req.cookies.user;
+
+  if (userId && req.path === "/index.html") {
+    return res.redirect("/tablet.html");
+  }
+
+  if (!userId && req.path === "/tablet.html") {
+    return res.redirect("/index.html");
+  }
+
+  if (userId) {
+    const user = {
+      email: "admin@gmail.com",
+      firstname: "qwerty",
+    };
+
+    req.user = user;
+  }
+
+  next();
+});
+
+app.use(express.static("frontEnd"));
+
 app.use("/users", userRoutes);
 app.use("/bank", bankRoutes);
 
