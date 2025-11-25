@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="login-container">
+      <h1>login</h1>
+      <form id="loginForm">
+        <!-- <input id="email" placeholder="example.com" type="email" />
+        <input id="password" placeholder="password" type="password" /> -->
+        <button id="login" onclick="login()">login</button>
+        <div class="error" id="errorMsg"></div>
+      </form>
+      <script>
+        const login = async () => {
+          const response = await fetch("http://localhost:8080/user/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "admin@gmail.com",
+              password: "password",
+            }),
+          });
+
+          if (response.ok) {
+            window.location.href = "/bank.html";
+          } else {
+            window.alert("Amjiltgui");
+          }
+        };
+      </script>
+    </div>
+  </body>
+</html>

@@ -1,16 +1,12 @@
 import { Router } from "express";
-import {
-  balance,
-  deposit,
-  withdraw,
-  getHistory,
-} from "../controllers/bankController.js";
 
-const router = Router();
+export const bankRouters = new Router();
 
-router.get("/balance", balance);
-router.post("/deposit", deposit);
-router.post("/withdraw", withdraw);
-router.get("/history", getHistory);
+bankRouters.post("/deposit", (req, res) => {
+  console.log(req.user);
 
-export default router;
+  if (!req.user) {
+    res.send("Newtreigui bn");
+  }
+  res.send("success");
+});

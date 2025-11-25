@@ -1,31 +1,30 @@
 import express from "express";
-import userRoutes from "../src/routers/userRoutes.js";
-import bankRoutes from "../src/routers/bankRoutes.js";
-import cors from "cors";
 import cookieParser from "cookie-parser";
+import { userRouters } from "./routers/userRoutes.js";
+import { bankRouters } from "./routers/bankRoutes.js";
 
 const app = express();
+
 const port = 8080;
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
 
 app.use("/", (req, res, next) => {
   const userId = req.cookies.user;
 
   if (userId && req.path === "/index.html") {
-    return res.redirect("/tablet.html");
+    return res.redirect("/bank.html");
   }
 
-  if (!userId && req.path === "/tablet.html") {
+  if (!userId && req.path === "/bank.html") {
     return res.redirect("/index.html");
   }
 
   if (userId) {
     const user = {
-      email: "admin@gmail.com",
-      firstname: "qwerty",
+      emai: "admin@gmail.com",
+      firstName: "1321",
     };
 
     req.user = user;
@@ -34,42 +33,11 @@ app.use("/", (req, res, next) => {
   next();
 });
 
-app.use(express.static("frontEnd"));
+app.use(express.static("frontend"));
 
-app.use("/users", userRoutes);
-app.use("/bank", bankRoutes);
+app.use("/user", userRouters);
+app.use("/bank", bankRouters);
 
 app.listen(port, () => {
-  console.log(`Server in the ${port}`);
+  console.log(`express app running at ${port} `);
 });
-
-// const apiURL = "http://localhost:8080";
-
-// document.getElementById("loginForm").addEventListener("submit", async (e) => {
-//   e.preventDefault();
-
-//   const username = document.getElementById("email").value;
-//   const password = document.getElementById("password").value;
-//   const errorBox = document.getElementById("errorMsg");
-
-//   try {
-//     const respone = await fetch(`${apiURL}/src/services`, {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ username, password }),
-//     });
-
-//     const data = await res.json();
-
-//     if (!res.ok) {
-//       errorBox.innerText = data.message;
-//       return;
-//     }
-
-//     sessionStorage.setItem("username", username);
-
-//     window.location.href = "tablet.html";
-//   } catch (error) {
-//     errorBox.innerText = "Server is not responding...";
-//   }
-// });
