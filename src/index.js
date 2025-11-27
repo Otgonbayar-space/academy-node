@@ -3,6 +3,9 @@ import cookieParser from "cookie-parser";
 import { userRouters } from "./routers/userRoutes.js";
 import { bankRouters } from "./routers/bankRoutes.js";
 
+// import { email } from "../frontEnd/login.js";
+// import { password } from "../frontEnd/login.js";
+
 const app = express();
 
 const port = 8080;
@@ -10,7 +13,7 @@ const port = 8080;
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/", (req, res, next) => {
+app.use("/", async (req, res, next) => {
   const userId = req.cookies.user;
   console.log(userId);
   if (userId && req.path === "/login.html") {
