@@ -16,6 +16,7 @@ app.use(cookieParser());
 app.use("/", async (req, res, next) => {
   const userId = req.cookies.user;
   console.log(userId);
+
   if (userId && req.path === "/login.html") {
     return res.redirect("/bank.html");
   }

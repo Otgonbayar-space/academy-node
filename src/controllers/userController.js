@@ -9,14 +9,24 @@ export const login = async (req, res) => {
   const userPath = path.join(_dirname, "../../data/users.json");
   const inputPath = path.join(_dirname, "../../frontEnd/login.js");
   const { email, password } = req.body;
+
   const userRawData = await fs.readFile(userPath, "utf-8");
 
   const userData = JSON.parse(userRawData);
 
+  const user = userData.find(
+    (u) => u.email === email && u.password === password
+  );
+
+  if (!user) {
+    throw new Error("hereglegch oldsongui");
+  }
   res.cookie("user", userData, {
     httpOnly: true,
     secure: false,
   });
+
+  res.send("Success!");
   res.json({
     // user: ["qwe@gmail.com"],
   });
@@ -24,6 +34,4 @@ export const login = async (req, res) => {
 
 export const logout = (req, res) => {
   res.clearCookie("user");
-
-  res.send("Success!");
 };
