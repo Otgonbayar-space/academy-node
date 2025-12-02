@@ -1,16 +1,32 @@
-import express from "express";
-import {getTransaction, getBalance, getDeposit, getWithdraw} from "../controllers/bankController.js"
-import {auth} from "../index.js";
-import { getHistory } from "../services/bankService.js";
+import { Router } from "express";
+import {
+  createTransaction,
+  getTransactions,
+  getTransactionsByAccountNumber,
+  createAccount,
+  updateAccount,
+  deleteAccount,
+  getAllAccounts,
+  getAccountByNumber,
+  //   updateTransaction,
+  //   deleteTransaction,
+} from "../controllers/bankController.js";
 
-const router = express.Router();
+export const bankRouters = new Router();
 
-router.use(auth);
+// Account-related
+bankRouters.get("/accounts", getAllAccounts);
+bankRouters.get("/accounts/:accountNumber", getAccountByNumber);
+bankRouters.post("/accounts", createAccount);
+bankRouters.put("/accounts/:accountNumber", updateAccount);
+bankRouters.delete("/accounts/:accountNumber", deleteAccount);
 
-router.get("/balance", getBalance);
-
-router.get("/deposit", getDeposit);
-
-router.get("/withdraw", getWithdraw);
-
-router.get("/transaction", getTransaction);
+// Transaction-related
+bankRouters.get("/transactions", getTransactions);
+bankRouters.get(
+  "/accounts/:accountNumber/transactions",
+  getTransactionsByAccountNumber
+);
+// bankRouters.post("/transactions", createTransaction);
+// bankRouters.put("/transactions/:transactionId", updateTransaction);
+// bankRouters.delete("/transactions/:transactionId", deleteTransaction);

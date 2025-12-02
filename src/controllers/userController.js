@@ -1,26 +1,55 @@
-import  {findEmail} from "../services/userService.js";
+import {
+  createUserService,
+  updateUserService,
+  getUsersService,
+  getUserByIdService,
+  deleteUserService,
+  getUserAccountsService,
+  getUserTransactionsService,
+} from "../services/userService.js";
 
-export const loginUser = (req, res) =>{
-const {email, password} = req.body;
+export const createUser = async (req, res) => {
+  const { username, email, password } = req.body;
 
-const user = findEmail(email);
-if(!user) return res.status(404).json({msg:"Email oldsongui"});
-if(user.password !==password) return res.status(401).json({msg:"Password buruu"});
+  const user = await createUserService(username, email, password);
 
-res.cookie("userId", user.id, {
-  httpOnly: true,
-  maxAge: 3*24*60*60*1000
-});
-
-res.json({
-  msg:"Amjilttai nevterlee",
-  firstname: user.firstname,
-  lastname: user.lastname
-});
-
+  res.json(user);
 };
 
-export const logoutUser = (req, res)=>{
-  res.clearCookie("userId");
-  res.json({msg:"Holbolt sallaa"})
-}
+export const updateUser = async (req, res) => {
+  const { id, username, email, password, firstname, lastname } = req.body;
+
+  const user = await updateUserService(
+    id,
+    username,
+    email,
+    password,
+    firstname,
+    lastname
+  );
+
+  res.json(user);
+};
+
+export const getUsers = async (req, res) => {
+  const users = await getUsersService();
+  res.json(users);
+};
+
+export const getUserById = async (req, res) => {
+  const { id } = req.query;
+  const user = await getUserByIdService(id);
+  res.json(user);
+};
+
+export const deleteUser = async (req, res) => {
+  const { id } = req.query;
+  const user = await deleteUserService(id);
+  res.json(user);
+};
+
+export const getUserAccounts = async (req, res) => {
+  const { id } = req.query;
+  const accounts = await getUserAccountsService(id);
+  res.json(accounts);
+};
