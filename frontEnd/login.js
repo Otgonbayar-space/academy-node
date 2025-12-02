@@ -1,7 +1,7 @@
 const login = async () => {
-  const userEmail = document.getElementById("email");
+  const userEmail = document.getElementById("email").value;
   const userPassword = document.getElementById("password").value;
-  const submit = document.getElementById("login").value;
+  const submit = document.getElementById("login");
 
   const response = await fetch("http://localhost:8080/user/login", {
     method: "POST",
