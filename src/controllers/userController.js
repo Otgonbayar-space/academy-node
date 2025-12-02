@@ -1,37 +1,26 @@
-import fs from "node:fs/promises";
-import path from "path";
-import { fileURLToPath } from "node:url";
+import  {findEmail} from "../services/userService.js";
 
-const _filename = fileURLToPath(import.meta.url);
-const _dirname = path.dirname(_filename);
+export const loginUser = (req, res) =>{
+const {email, password} = req.body;
 
-export const login = async (req, res) => {
-  const userPath = path.join(_dirname, "../../data/users.json");
-  const inputPath = path.join(_dirname, "../../frontEnd/login.js");
-  const { email, password } = req.body;
+const user = findEmail(email);
+if(!user) return res.status(404).json({msg:"Email oldsongui"});
+if(user.password !==password) return res.status(401).json({msg:"Password buruu"});
 
-  const userRawData = await fs.readFile(userPath, "utf-8");
+res.cookie("userId", user.id, {
+  httpOnly: true,
+  maxAge: 3*24*60*60*1000
+});
 
-  const userData = JSON.parse(userRawData);
+res.json({
+  msg:"Amjilttai nevterlee",
+  firstname: user.firstname,
+  lastname: user.lastname
+});
 
-  const user = userData.find(
-    (u) => u.email === email && u.password === password
-  );
-
-  if (!user) {
-    throw new Error("hereglegch oldsongui");
-  }
-  res.cookie("user", userData, {
-    httpOnly: true,
-    secure: false,
-  });
-
-  res.send("Success!");
-  res.json({
-    // user: ["qwe@gmail.com"],
-  });
 };
 
-export const logout = (req, res) => {
-  res.clearCookie("user");
-};
+export const logoutUser = (req, res)=>{
+  res.clearCookie("userId");
+  res.json({msg:"Holbolt sallaa"})
+}

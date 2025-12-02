@@ -1,14 +1,15 @@
 const login = async () => {
   const userEmail = document.getElementById("email");
-  const userPassword = document.getElementById("password");
-  const submit = document.getElementById("login");
+  const userPassword = document.getElementById("password").value;
+  const submit = document.getElementById("login").value;
 
   const response = await fetch("http://localhost:8080/user/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify({
       email: userEmail.value,
-      password: userEmail.value,
+      password: userPassword.value,
     }),
   });
 

@@ -1,12 +1,16 @@
-import { Router } from "express";
+import express from "express";
+import {getTransaction, getBalance, getDeposit, getWithdraw} from "../controllers/bankController.js"
+import {auth} from "../index.js";
+import { getHistory } from "../services/bankService.js";
 
-export const bankRouters = new Router();
+const router = express.Router();
 
-bankRouters.post("/deposit", (req, res) => {
-  console.log(req.user);
+router.use(auth);
 
-  if (!req.user) {
-    res.send("Newtreigui bn");
-  }
-  res.send("success");
-});
+router.get("/balance", getBalance);
+
+router.get("/deposit", getDeposit);
+
+router.get("/withdraw", getWithdraw);
+
+router.get("/transaction", getTransaction);
