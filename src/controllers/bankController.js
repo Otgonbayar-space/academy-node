@@ -64,3 +64,22 @@ export const getTransactionsByAccountNumber = async (req, res) => {
   const transactions = await getTransactionsByAccountNumber(account_number);
   res.json(transactions);
 };
+
+export const updateTransaction = async (req, res) => {
+  const { id, type, amount, fromaccount, toaccount } = req.body;
+
+  const transaction = await updateTransactionService(
+    id,
+    type,
+    amount,
+    fromaccount,
+    toaccount
+  );
+  res.json(transaction);
+};
+
+export const deleteTransaction = async (req, res) => {
+  const { id } = req.query;
+  const transaction = await deleteTransactionService(id);
+  res.json(transaction);
+};
