@@ -1,18 +1,34 @@
 import express from "express";
-import {getTransaction, getBalance, getDeposit, getWithdraw} from "../controllers/bankController.ts"
-import {auth} from "../index.ts";
-import { getHistory } from "../services/bankService.ts";
+import {
+  createAccount,
+  updateAccount,
+  getAccountByNumber,
+  createTransaction,
+  getTransactions,
+  getTransactionsByUserId,
+  getTransactionsByAccountNumber,
+  updateTransaction,
+  deleteTransaction,
+} from "../controllers/bankController.js";
 
-const router = express.Router();
+export const bankRouters = express.Router();
 
-router.use(auth);
+router.post("/createAcc", createAccount);
 
-router.get("/balance", getBalance);
+router.post("/deleteAcc", updateAccount);
 
-router.get("/deposit", getDeposit);
+router.get("/getAcc", getAccountByNumber);
 
-router.get("/withdraw", getWithdraw);
+router.post("/createTrans", createTransaction);
 
-router.get("/transaction", getTransaction);
+router.get("/getTrans", getTransactions);
+
+router.get("/getTransId", getTransactionsByUserId);
+
+router.get("/getTransNumber", getTransactionsByAccountNumber);
+
+router.post("/updateTrans", updateTransaction);
+
+router.post("/deleteTrans", deleteTransaction);
 
 export default router;

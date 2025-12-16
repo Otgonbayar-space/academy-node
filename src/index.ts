@@ -12,7 +12,7 @@ app.use("/user", userRouters);
 app.use("/bank", bankRouters);
 
 app.get("/asd", (req: Request<[id: string]>, res: Response) => {
-  const id = req.params.id;
+  const id = req.params;
   res.send(id);
 });
 // await connectDb();

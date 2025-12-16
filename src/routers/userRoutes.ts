@@ -7,7 +7,7 @@ import {
   getUserAccounts,
 } from "../controllers/userController.js";
 
-export const userRouters =  Router();
+export const userRouters = Router();
 
 //user tei holbootoi post route uud
 
