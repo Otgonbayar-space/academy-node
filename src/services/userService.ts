@@ -1,6 +1,6 @@
 import { db } from "../db.js";
 
-export const createUserService = async (username, email, password) => {
+export const createUserService = async (username:string, email:string, password:string) => {
   const response = await db.query(
     `INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *`,
     [username, email, password]
@@ -14,12 +14,12 @@ export const getUsersService = async () => {
 };
 
 export const updateUserService = async (
-  id,
-  username,
-  email,
-  password,
-  firstname,
-  lastname
+  id:number,
+  username:string,
+  email:string,
+  password:string,
+  firstname:string,
+  lastname:string
 ) => {
   const response = await db.query(
     `UPDATE users SET username = ${username}, email = ${email}, password = ${password}, firstname = ${firstname}, lastname = ${lastname} WHERE id = ${id} RETURNING *`
@@ -27,26 +27,26 @@ export const updateUserService = async (
   return response.rows[0];
 };
 
-export const getUserByIdService = async (id) => {
+export const getUserByIdService = async (id:number) => {
   const response = await db.query(`SELECT * FROM users WHERE id = ${id}`);
   return response.rows[0];
 };
 
-export const deleteUserService = async (id) => {
+export const deleteUserService = async (id:number) => {
   const response = await db.query(
     `DELETE FROM users WHERE id = ${id} RETURNING *`
   );
   return response.rows[0];
 };
 
-export const getUserAccountsService = async (id) => {
+export const getUserAccountsService = async (id:number) => {
   const response = await db.query(
     `SELECT * FROM accounts WHERE user_id = ${id}`
   );
   return response.rows;
 };
 
-export const getUserTransactionsService = async (id) => {
+export const getUserTransactionsService = async (id:number) => {
   const response = await db.query(
     `SELECT * FROM transactions WHERE user_id = ${id}`
   );

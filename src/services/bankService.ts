@@ -1,4 +1,4 @@
-import { db } from "../db.js";
+import { db } from "../db.ts";
 
 export const createAccountService = async (Number, userid, balance) => {
   const response = await db.query(
@@ -19,3 +19,17 @@ export const updateAccountService = async (Number, userid, balance) => {
   );
   return response.rows[0];
 };
+
+export const deleteAccountService = async (number)=>{
+  const response = await db.query(`DELETE FROM account WHERE number= ${number} RETURNING * `)
+  return response.rows[0];
+}
+
+export const getAccountByNumberService = async (number)=>{
+  const response = await db.query(`SELECT FROM account WHERE number = ${number} RETURNING *` );
+  return response.rows[0];
+}
+
+export const createTransactionService = async (user_id, amount, transaction_type)=>{
+  const response = await db.
+}
