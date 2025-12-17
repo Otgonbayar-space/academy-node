@@ -10,6 +10,7 @@ import {
   updateTransaction,
   deleteTransaction,
 } from "../controllers/bankController.js";
+import { Router } from "express";
 
 export const bankRouters = express.Router();
 

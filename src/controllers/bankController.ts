@@ -1,5 +1,17 @@
 import type { Response, Request } from "express";
-import { createTransactionService } from "../services/bankService.js";
+import {
+  createAccountService,
+  getAllAccountsService,
+  updateAccountService,
+  deleteAccountService,
+  getAccountByNumberService,
+  createTransactionService,
+  getTransactionsService,
+  getTransactionsByUserIdService,
+  getTransactionsByAccountNumberService,
+  updateTransactionService,
+  deleteTransactionService,
+} from "../services/bankService.js";
 
 // Шинэ данс үүсгэх
 export const createAccount = async (
@@ -7,7 +19,8 @@ export const createAccount = async (
   res: Response
 ): Promise<void> => {
   const { user_id, account_number, balance } = req.body;
-  res.json({});
+  const account = await createAccountService(user_id, account_number, balance);
+  res.json(account);
 };
 
 // Дансны мэдээллийг шинэчлэх
@@ -16,7 +29,13 @@ export const updateAccount = async (
   res: Response
 ): Promise<void> => {
   const { id, user_id, account_number, balance } = req.body;
-  res.json({});
+  const account = await updateAccountService(
+    id,
+    user_id,
+    account_number,
+    balance
+  );
+  res.json(account);
 };
 
 // Данс устгах
@@ -25,7 +44,8 @@ export const deleteAccount = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.body;
-  res.json({});
+  const account = await deleteAccountService(id);
+  res.json(account);
 };
 
 // Бүх дансыг авах
@@ -35,7 +55,8 @@ export const getAllAccounts = async (
 ): Promise<void> => {
   // Хэрвээ хэрэглэгчээр шүүх бол:
   const { user_id } = req.body;
-  res.json({});
+  const account = await getAllAccountsService(user_id);
+  res.json(account);
 };
 
 // данс авах
@@ -44,7 +65,8 @@ export const getAccountByNumber = async (
   res: Response
 ): Promise<void> => {
   const { account_number } = req.body;
-  res.json({});
+  const account = await getAccountByNumberService(account_number);
+  res.json(account);
 };
 
 // Шинэ гүйлгээ үүсгэх
