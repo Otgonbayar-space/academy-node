@@ -1,27 +1,62 @@
-import { MongoClient, ObjectId } from "mongodb";
+import express from "express";
+import type { Request, Response } from "express";
+import mongoose from "mongoose";
+import type { Document } from "mongoose";
+import { Schema, model } from "mongoose";
+import bodyParser from "body-parser";
 
-const uri =
-  "mongodb+srv://AIMAR_db_user:zkViL15SB6P0BQxpß@cluster0.c5uvlyc.mongodb.net/sample_mflix?appName=Cluster0";
+// Express app
+const app = express();
+app.use(bodyParser.json());
 
-const client = new MongoClient(uri);
+// MongoDB connection
+mongoose
+  .connect(
+    "mongodb+srv://AIMAR_db_user:zkViL15SB6P0BQxpß@Cluster0.c5uvlyc.mongodb.net/sample_mflix?appName=Cluster0"
+  )
+  .then(() => {
+    console.log("MongoDB connected");
+  })
+  .catch((err: Error) => {
+    console.error("MongoDB connection error:", err);
+  });
 
-const run = async () => {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("sample_mflix").command({ ping: 1 });
+// TypeScript interface for Student
+// interface IStudent extends Document {
+//   name: string;
+//   age: number;
+// }
 
-    const aa = await client.db("sample_mflix").collection("movies").findOne();
-    console.log(aa);
+// // Schema and Model
+// const StudentSchema: Schema<IStudent> = new Schema({
+//   name: { type: String, required: true },
+//   age: { type: Number, required: true },
+// });
 
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-};
+// const Student = model<IStudent>("Student", StudentSchema);
 
-run();
+// // REST API Endpoints
+
+// // GET all students
+// app.get("/students", async (req: Request, res: Response) => {
+//   try {
+//     const students = await Student.find();
+//     res.json(students);
+//   } catch (err) {
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
+// // POST new student
+// app.post("/students", async (req: Request, res: Response) => {
+//   try {
+//     const student = new Student(req.body);
+//     await student.save();
+//     res.status(201).json(student);
+//   } catch (err) {
+//     res.status(400).json({ error: "Invalid data" });
+//   }
+// });
+
+// Start server
+app.listen(3000, () => console.log("Server running on port 3000"));
