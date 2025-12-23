@@ -1,22 +1,27 @@
-import express from "express";
-import type { Request, Response } from "express";
-import { userRouters } from "./routers/userRoutes.js";
-import { bankRouters } from "./routers/bankRoutes.js";
-// import { connectDb } from "./db.js";
+import { MongoClient, ObjectId } from "mongodb";
 
-const app = express();
+const uri =
+  "mongodb+srv://AIMAR_db_user:zkViL15SB6P0BQxpß@cluster0.c5uvlyc.mongodb.net/sample_mflix?appName=Cluster0";
 
-app.use(express.json());
+const client = new MongoClient(uri);
 
-app.use("/user", userRouters);
-app.use("/bank", bankRouters);
+const run = async () => {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("sample_mflix").command({ ping: 1 });
 
-app.get("/asd", (req: Request<[id: string]>, res: Response) => {
-  const id = req.params;
-  res.send(id);
-});
-// await connectDb();
+    const aa = await client.db("sample_mflix").collection("movies").findOne();
+    console.log(aa);
 
-app.listen(3001, () => {
-  console.log("express app running at 3001");
-});
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+};
+
+run();
