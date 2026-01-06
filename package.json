@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Enkhtuvshin0513/academy-backend-#readme",
   "dependencies": {
     "@apollo/client": "^4.0.11",
+    "@apollo/server": "^5.2.0",
     "@types/pg": "^8.16.0",
     "apollo-server-express": "^3.13.0",
     "bcrypt": "^6.0.0",
