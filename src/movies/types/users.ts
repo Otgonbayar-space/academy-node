@@ -4,6 +4,8 @@ import { Hash } from "crypto";
 export interface IUsers {
   email: string;
   password: string;
-  username: string;
+  name: string;
 }
-export interface IUserDocument extends IUsers, Document {}
+export interface IUsersDocument extends IUsers, Document {
+  name: string;
+}

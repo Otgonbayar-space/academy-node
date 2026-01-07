@@ -3,6 +3,7 @@ import {
   type ITomatoesDocument,
   type IMoviesDocument,
 } from "../types/movie.ts";
+import {type IUsersDocument } from "../types/users.ts";
 
 const TomatoesSchema: Schema<ITomatoesDocument> = new Schema(
   {
@@ -44,4 +45,11 @@ const MovieSchema: Schema<IMoviesDocument> = new Schema({
   tomatoes: TomatoesSchema,
 });
 
+const userSchema: Schema<IUsersDocument> = new Schema({
+  name : {type: String},
+  email: {type: String},
+  password: {type: String}
+})
+
 export const Movies = model<IMoviesDocument>("movies", MovieSchema);
+export const Users = model<IUsersDocument>("users", userSchema)
