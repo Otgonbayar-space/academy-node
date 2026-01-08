@@ -1,4 +1,4 @@
-import { Movies } from "../db/models.ts";
+import { Movies, Users } from "../db/models.ts";
 import { type IContext } from "../../index.ts";
 
 export const movieQueries = {
@@ -20,5 +20,15 @@ export const movieQueries = {
     const movies = await Movies.findOne({ _id });
 
     return movies;
+  },
+};
+
+export const userQueries = {
+  userDetail: async (_root: undefined, { _id }: { _id: string }) => {
+    const user = await Users.findOne({ _id });
+
+    console.log(user);
+
+    return user;
   },
 };

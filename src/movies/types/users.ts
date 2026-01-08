@@ -1,11 +1,11 @@
 import { Document } from "mongoose";
-import { Hash } from "crypto";
+import { Hash } from "node:crypto";
 
-export interface IUsers {
+export interface IUser {
   email: string;
+  name: string;
   password: string;
-  name: string;
+  id: string;
 }
-export interface IUsersDocument extends IUsers, Document {
-  name: string;
-}
+
+export interface IUserDocument extends IUser, Document {}

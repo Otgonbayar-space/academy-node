@@ -2,6 +2,13 @@ import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import mongoose from "mongoose";
 import { typeDefs, resolvers } from "./apolloServer.ts";
+import { Users } from "./movies/db/models.ts";
+import * as dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+
+dotenv.config();
+
+const SECRET_KEY = process.env.JWT_SECRET;
 
 mongoose
   .connect(
@@ -15,9 +22,7 @@ mongoose
   });
 
 export interface IContext {
-  user: {
-    firstname: string;
-  };
+  user?: null;
 }
 
 const server = new ApolloServer<IContext>({
@@ -28,10 +33,25 @@ const server = new ApolloServer<IContext>({
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4000 },
   context: async ({ req, res }) => {
+    const token = req.headers.authorization;
+
+    if (!token) {
+      return "token bhgu";
+    }
+    if (!SECRET_KEY) {
+      return "secret key bhgu";
+    }
+    const decoded = jwt.verify(token, SECRET_KEY);
+
+    const userDetail = await Users.find({
+      email: decoded.email,
+    });
+    if (!userDetail) {
+      return "user bhgu bn";
+    }
+
     return {
-      user: {
-        firstname: "bat",
-      },
+      user: userDetail,
     };
   },
 });

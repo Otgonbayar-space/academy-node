@@ -1,4 +1,5 @@
 import { Document } from "mongoose";
+import { Hash } from "node:crypto";
 
 export interface IRating {
   rating: number;
@@ -28,12 +29,13 @@ export interface IMovie {
   relased: Date;
   languages: string[];
   directors: string[];
-  awards?: {
+  awards: {
     wins: number;
     nominations: number;
     text: string;
   };
   tomatoes: ITomateos;
+  userId: String;
 }
 
 export interface IMoviesDocument extends IMovie, Document {
