@@ -18,6 +18,7 @@ export interface ITomateos {
 export interface ITomatoesDocument extends ITomateos, Document {}
 
 export interface IMovie {
+  userId: string;
   title: string;
   year: number;
   plot: string;
@@ -35,7 +36,6 @@ export interface IMovie {
     text: string;
   };
   tomatoes: ITomateos;
-  userId: String;
 }
 
 export interface IMoviesDocument extends IMovie, Document {

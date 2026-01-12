@@ -37,7 +37,7 @@ export const movieQueryTypeDefs = `
 `;
 
 export const movieMutationTypeDefs = `
- addMovie(input: MovieInput): String
+ addMovie(input: MovieInput): Movie
 `;
 
 export const userMutationTypeDefs = `
@@ -61,4 +61,24 @@ export const userTypeDefs = `
 
 export const userQueryTypeDefs = `
   userDetail(_id: ID): User
+`;
+
+export const commentTypesDefs = `
+input CommentInput {
+name: String
+  email: String
+  text: String
+  }
+
+  type Comment {
+  name: String
+  email: String
+  text: String
+  date: Int
+  movie_id: String
+  }
+`;
+
+export const commentMutationTypeDefs = `
+addComment(input: CommentInput): Comment
 `;
