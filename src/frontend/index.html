@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create Student with Auth</title>
+  </head>
+  <body>
+    <h2>Create Student (Auth via Token)</h2>
+
+    <!-- <input id="name" placeholder="Name" />
+    <input id="age" type="number" placeholder="Age" />
+    <input id="grade" placeholder="Grade" /> -->
+    <button id="createBtn">Create Student</button>
+    <button id="login">Login</button>
+
+    <p id="message"></p>
+
+    <script>
+      const endpoint = "https://localhost:4000"; // GraphQL серверийн URL
+
+      const createBtn = document.getElementById("createBtn");
+      const message = document.getElementById("message");
+
+      createBtn.addEventListener("click", async () => {
+        const name = document.getElementById("name").value;
+        const age = parseInt(document.getElementById("age").value);
+        const grade = document.getElementById("grade").value;
+
+        // localStorage-аас token-г авна
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          message.textContent = "No token found! Please login first.";
+          return;
+        }
+
+        // GraphQL mutation
+        const mutation = `
+        mutation CreateStudent($name: String!, $age: Int!, $grade: String!) {
+          createStudent(name: $name, age: $age, grade: $grade) {
+            id
+            name
+            age
+            grade
+          }
+        }
+      `;
+
+        try {
+          const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`, // token-г localStorage-аас авсан
+            },
+            body: JSON.stringify({
+              query: mutation,
+              variables: { name, age, grade },
+            }),
+          });
+
+          const result = await response.json();
+          console.log(result);
+
+          if (result.data && result.data.createStudent) {
+            const student = result.data.createStudent;
+            message.textContent = `Student created: ${student.name}, Age: ${student.age}, Grade: ${student.grade}`;
+          } else {
+            message.textContent =
+              "Failed to create student! Check token or input.";
+          }
+        } catch (error) {
+          console.error(error);
+          message.textContent = "Error connecting to server";
+        }
+      });
+    </script>
+  </body>
+</html>
