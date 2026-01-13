@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create User</title>
+  </head>
+  <body>
+    <h2>Signup User</h2>
+
+    <input id="email" placeholder="email" />
+    <input id="name" placeholder="name" />
+    <input id="password" type="password" placeholder="password" />
+    <button id="signupBtn">Signup</button>
+
+    <p id="message"></p>
+
+    <script>
+      const endpoint = "http://localhost:4000";
+
+      const signupBtn = document.getElementById("signupBtn");
+      const message = document.getElementById("message");
+
+      signupBtn.addEventListener("click", async () => {
+        const email = document.getElementById("email").value;
+        const name = document.getElementById("name").value;
+        const password = document.getElementById("password").value;
+        console.log(name);
+
+        const mutation = `
+            mutation SignupUser($input: UserInput) {
+                signupUser(input: $input)
+                 }
+            `;
+
+        try {
+            const response = await fetch(endpoint, {
+                method:"POST",
+                headers:{
+                    "Content-Type": "application/json",
+                },
+                body : JSON.stringify({
+                    query: mutation,
+                    variables:{
+
+                      input: {
+                      email: email,
+                      name: name,
+                      password: password
+                      }}})})}})
+    </script>
+  </body>
+  >
+</html>

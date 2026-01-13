@@ -7,14 +7,13 @@
     <h2>Create User (Auth via Token)</h2>
 
     <input id="email" placeholder="email" />
-    <input id="password" type="password" placeholder="password" />
-
+    <input id="password" type="password" placeholder="pass" />
     <button id="loginBtn">Login</button>
 
     <p id="message"></p>
 
     <script>
-      const endpoint = "https://localhost:4000/"; // GraphQL серверийн URL
+      const endpoint = "http://localhost:4000/"; // GraphQL серверийн URL
 
       const loginBtn = document.getElementById("loginBtn");
       const message = document.getElementById("message");
@@ -22,10 +21,9 @@
       loginBtn.addEventListener("click", async () => {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-
-        console.log("email:", email);
+        console.log(email);
         // localStorage-аас token-г авна
-        const token = localStorage.getItem("authToken");
+        // const token = localStorage.getItem("authToken");
         // if (!token) {
         //   message.textContent = "No token found! Please login first.";
         //   return;
@@ -33,20 +31,20 @@
 
         // GraphQL mutation
         const mutation = `
-        mutation Mutation($input: LoginInput) {
-         loginUser(input: $input) {
-             message
-             token
-  }
-}
-      `;
+          mutation LoginUser($input: LoginInput) {
+            loginUser(input: $input) {
+              message
+              token
+            }
+          }
+        `;
 
         try {
           const response = await fetch(endpoint, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              //   Authorization: `Bearer ${token}`, // token-г localStorage-аас авсан
+              // Authorization: `Bearer ${token}`, // token-г localStorage-аас авсан
             },
             body: JSON.stringify({
               query: mutation,
@@ -62,18 +60,23 @@
           const result = await response.json();
           console.log(result);
 
-          //   if (result.data && result.data.createStudent) {
-          //     const student = result.data.createStudent;
-          //     message.textContent = `Student created: ${student.name}, Age: ${student.age}, Grade: ${student.grade}`;
-          //   } else {
-          //     message.textContent =
-          //       "Failed to create student! Check token or input.";
-          //   }
+          if (result.data && result.data.createStudent) {
+            const student = result.data.createStudent;
+            message.textContent = `Student created: ${student.name}, Age: ${student.age}, Grade: ${student.grade}`;
+          } else {
+            message.textContent =
+              "Failed to create student! Check token or input.";
+          }
         } catch (error) {
           console.error(error);
           message.textContent = "Error connecting to server";
         }
       });
+      const signup = async () => {
+        window.location.href = "./signup.html";
+      };
     </script>
+
+    <p><button id="1" onclick="signup()">Signup</button></p>
   </body>
 </html>
