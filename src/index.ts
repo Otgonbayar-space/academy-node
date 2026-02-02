@@ -1,10 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-import { movieRouter } from "./movies/router.ts";
+import { movieRouter } from "./movies/routes.ts";
+import cors from "cors";
 
 // Express app
 const app = express();
+
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/movie", movieRouter);
@@ -12,7 +15,7 @@ app.use("/movie", movieRouter);
 // MongoDB connection
 mongoose
   .connect(
-    "mongodb+srv://kaobuuu30_db_user:figEDNEj8W$tbgy@cluster0.celbvau.mongodb.net/sample_mflix?appName=Cluster0"
+    "mongodb+srv://Achka1121:QrPqkWmvZrs2v835@backend-lesson.zrskizs.mongodb.net/sample_mflix?appName=backend-lesson",
   )
   .then(() => {
     console.log("MongoDB connected");

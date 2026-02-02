@@ -14,12 +14,6 @@ interface ITomatoes extends Document {
   lastUpdated?: Date;
 }
 
-interface IMDB {
-  rating: Number;
-  votes: Number;
-  id: Number;
-}
-
 export interface IMoviesDocument extends Document {
   title: string;
   year: number;
@@ -40,12 +34,6 @@ export interface IMoviesDocument extends Document {
   tomatoes: ITomatoes;
 }
 
-const ImdbSchema: Schema<IMDB> = new Schema({
-  rating: { type: Number },
-  votes: { type: Number },
-  id: { type: Number },
-});
-
 const TomatoesSchema: Schema<ITomatoes> = new Schema(
   {
     viewer: {
@@ -61,7 +49,7 @@ const TomatoesSchema: Schema<ITomatoes> = new Schema(
     rotten: Number,
     lastUpdated: Date,
   },
-  { _id: false }
+  { _id: false },
 );
 
 const MovieSchema: Schema<IMoviesDocument> = new Schema({

@@ -1,6 +1,5 @@
 import type { Request, Response } from "express";
 import { Movies } from "./models.ts";
-import mongoose from "mongoose";
 
 const MovieAddController = async (req: Request, res: Response) => {
   const movieadd = await Movies.insertMany({
