@@ -5,10 +5,16 @@ import { Movies } from "./models.ts";
 export const movieRouter = Router();
 
 movieRouter.get("/movies", async (req: Request, res: Response) => {
-  console.log("movies");
-  const movies = await Movies.find({}).limit(100);
+  console.log("sasadas");
+  const { genre } = req.query;
 
-  console.log(movies);
+  const query = {} as any;
+
+  if (genre) {
+    query.genres = genre;
+  }
+
+  const movies = await Movies.find(query).limit(100);
 
   res.json(movies);
 });
